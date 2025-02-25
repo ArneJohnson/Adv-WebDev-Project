@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/stores', async (req, res) => {
     try {
         const stores = await model.getAllStores();
-        res.json(stores); // ✅ Returns the correct database result
+        res.json(stores);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch stores' });
     }
