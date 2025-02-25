@@ -36,10 +36,10 @@ class ModelClass {
         }
     }
 
-    async getAllStores(ORDER) {
-        const res = await this.pool.query('SELECT * FROM public.stores ORDER BY $1', [ORDER]);
+    async getAllStores() {
+        const res = await this.pool.query('SELECT * FROM public.stores ORDER BY name');
         return res.rows;
-    }
+    }    
 
     async getStoreById(storeId) {
         const { rows } = await this.pool.query(`SELECT * FROM public.stores WHERE id = $1`, [storeId]);
