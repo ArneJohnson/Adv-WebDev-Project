@@ -8,12 +8,10 @@ const model = new ModelClass();
 const port = 3000;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));  // Serve static files from 'public'
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve the index.html when visiting the root
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html')); // Correct path to index.html
-});
+    res.sendFile(path.join(__dirname, '..', 'index.html'));});
 
 // API routes
 app.get('/stores', async (req, res) => {
