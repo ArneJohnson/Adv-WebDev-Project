@@ -8,8 +8,14 @@ const model = new ModelClass();
 const port = 3000;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));  // Serve static files from 'public'
 
+// Serve the index.html when visiting the root
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html')); // Correct path to index.html
+});
+
+// API routes
 app.get('/stores', async (req, res) => {
     try {
         const stores = await model.getAllStores();
@@ -46,7 +52,6 @@ app.get('/store', async (req, res) => {
     }
 });
 
-// ❗ Remind me to discuss error handling and response messages with you later
 app.delete('/store', async (req, res) => {
     const { id: storeid } = req.query;
 
@@ -80,6 +85,7 @@ app.post('/newstore', async (req, res) => {
     }
 });
 
+// Start server after initializing the database
 const server = async () => {
     try {
         await model.initDb();
