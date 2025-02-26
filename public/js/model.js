@@ -1,5 +1,5 @@
 const { Pool } = require('pg');
-const stores = require('./stores.json');
+const stores = require('../../stores.json');
     
 class ModelClass {
     constructor() {

@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
-const ModelClass = require('./model');
+const ModelClass = require('./public/js/model');
 const model = new ModelClass();
 const port = 3000;
 
@@ -12,8 +12,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'index.html'));});
-
-    // answer
 
 // API routes
 app.get('/stores', async (req, res) => {
