@@ -1,17 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create New Store</title>
-    link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="http://localhost:3000/css/style.css" />
+  </head>
+  <body>
     <div class="navbar">
-        <a href="index.html">Home</a>
-        <a href="stores.html">Stores</a>
-        <a>Login</a>
+      <a href="index.html">Stores</a>
+      <a href="login.html">Login</a>
     </div>
-</body>
-<script src="/public/js/addStore.js"></script>
+
+    <form action="/newstore" method="post">
+      <div>
+        <div>
+          <label for="add-store">Store name</label>
+          <input type="text" name="name" id="add-name" />
+        </div>
+
+        <div>
+          <label for="add-url">Store URL</label>
+          <input type="text" name="url" id="add-url" />
+        </div>
+
+        <div>
+          <label for="add-district">Store district</label>
+          <input type="text" name="district" id="add-district" />
+        </div>
+
+        <div>
+          <button type="submit">Add new store</button>
+        </div>
+      </div>
+    </form>
+  </body>
+  <script src="/js/addStore.js"></script>
 </html>

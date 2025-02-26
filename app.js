@@ -11,7 +11,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'index.html'));});
+    res.sendFile(path.join(__dirname, '..', 'index.html'));
+});
 
 // API routes
 app.get('/stores', async (req, res) => {
@@ -23,10 +24,10 @@ app.get('/stores', async (req, res) => {
     }
 });
 
-app.get('/storesFiltered', async (req, res) => { 
+app.get('/storesFiltered', async (req, res) => {
     try {
         const stores = await model.getAllStores();
-        res.json(stores); 
+        res.json(stores);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch stores' });
     }
@@ -82,6 +83,25 @@ app.post('/newstore', async (req, res) => {
         return res.status(500).json({ error: 'Failed to add new store' });
     }
 });
+
+app.post('/store/new', function (req, res) {
+    const addStore = [req.body.name, req.body.url, reg.body.district];
+
+    // if (req.session.isLoggedIn && req.session.isAdmin) {
+
+    // }
+
+    // db.run("INSERT INTO skills (sskill, sdesc) VALUES (?,?)", newskill, (error) => {
+    //     if (error) {
+    //         console.log("ERROR: ", error)
+    //     }
+    //     else {
+    //         console.log("Line added into skills table")
+    //     }
+    // })
+
+    res.redirect('/');
+})
 
 // Start server after initializing the database
 const server = async () => {
