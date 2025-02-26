@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { Pool } = require('pg');
 const stores = require('../../stores.json');
     
@@ -13,8 +14,13 @@ class ModelClass {
     }
 
     async initDb() {
-        await this.pool.connect();
-    }
+        try {
+            await this.pool.connect();
+            console.log('Database connection successful');
+        } catch (error) {
+            console.error('Error connecting to the database:', error.stack);
+        }
+    }    
 
     async setupDb() {
         await this.pool.query(`CREATE TABLE IF NOT EXISTS public.stores (

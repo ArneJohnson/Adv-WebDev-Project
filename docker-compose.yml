@@ -4,7 +4,7 @@ services:
     container_name: stores_db
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 12345
+      POSTGRES_PASSWORD: "12345"
       POSTGRES_DB: stores
     ports:
       - "5432:5432"
@@ -12,6 +12,12 @@ services:
       - pg_data:/var/lib/postgresql/data
     networks:
       - store-network
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "stores", "-h", "stores_db"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
 
   app:
     build: .
@@ -21,13 +27,14 @@ services:
     depends_on:
       - db
     environment:
-      DB_HOST: db
+      DB_HOST: db   
       DB_PORT: 5432
       DB_USER: postgres
-      DB_PASSWORD: 12345
+      DB_PASSWORD: "12345"  # This must match the password set in the db container
       DB_NAME: stores
     networks:
       - store-network
+    command: ["node", "server.js"]
 
 networks:
   store-network:
