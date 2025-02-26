@@ -17,7 +17,6 @@ class ModelClass {
     }
 
     async setupDb() {
-        // Create the table with a single primary key definition
         await this.pool.query(`CREATE TABLE IF NOT EXISTS public.stores (
             id SERIAL PRIMARY KEY,  -- single primary key
             name text,
@@ -26,7 +25,6 @@ class ModelClass {
             industry text
         )`);
     
-        // Insert stores into the table if they don't already exist
         for (const store of stores) {
             const { rows } = await this.pool.query(`SELECT * FROM public.stores WHERE name = $1`, [store.name]);
             if (rows.length === 0) {
@@ -57,8 +55,8 @@ class ModelClass {
         await this.pool.query(`UPDATE public.stores SET name = $1, url = $2, district = $3, industry = $4 WHERE id = $5`, values);
     }
 
-    async addStore(newStore) {
-        const { name, url, district, industry } = newStore;
+    async addStore(addStore) {
+        const { name, url, district, industry } = addStore;
         const values = [name, url, district, industry];
 
         await this.pool.query(`INSERT INTO public.stores (name, url, district, industry) VALUES ($1, $2, $3, $4)`, values);

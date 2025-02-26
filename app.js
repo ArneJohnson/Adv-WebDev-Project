@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // API routes
@@ -73,35 +73,17 @@ app.put('/store', async (req, res) => {
     }
 });
 
-app.post('/newstore', async (req, res) => {
-    const newStore = req.body;
+app.post('/addStore', async (req, res) => {
+    const newStore = req.body; 
 
     try {
         await model.addStore(newStore);
         return res.json({ message: 'New store was added' });
     } catch (error) {
+        console.error(error);
         return res.status(500).json({ error: 'Failed to add new store' });
     }
 });
-
-app.post('/store/new', function (req, res) {
-    const addStore = [req.body.name, req.body.url, reg.body.district];
-
-    // if (req.session.isLoggedIn && req.session.isAdmin) {
-
-    // }
-
-    // db.run("INSERT INTO skills (sskill, sdesc) VALUES (?,?)", newskill, (error) => {
-    //     if (error) {
-    //         console.log("ERROR: ", error)
-    //     }
-    //     else {
-    //         console.log("Line added into skills table")
-    //     }
-    // })
-
-    res.redirect('/');
-})
 
 // Start server after initializing the database
 const server = async () => {

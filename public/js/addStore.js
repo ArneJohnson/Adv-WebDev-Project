@@ -1,39 +1,38 @@
-function addStore() {
-    const form = document.querySelector('form');
-    form.classList.add('addStore');
+async function addStore() {
+    const form = document.getElementById('addStoreForm'); 
+    const inputName = document.getElementById('add-name');
+    const inputUrl = document.getElementById('add-url');
+    const inputDistrict = document.getElementById('add-district');
 
-    const inputName = document.createElement('input');
-    const inputUrl = document.createElement('input');
-    const inputDistrict = document.createElement('input');
-    const inputIndustry = document.createElement('input');
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault(); 
 
-    const submit = document.createElement('button');
-
-    inputName.placeholder = 'Name of the store';
-    inputUrl.placeholder = 'URL of the store';
-    inputDistrict.placeholder = 'city district';
-    inputIndustry.placeholder = 'industry';
-    submitButton.innerText = 'Add store';
-
-    submitButton.addEventListener('click', () => {
         const store = {
             name: inputName.value,
             url: inputUrl.value,
-            district: inputDistrict.value,
-            industry: inputIndustry.value
+            district: inputDistrict.value
         };
 
-        fetch('/addStore', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(store)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            createStores('/stores');
-        });
+        try {
+            const response = await fetch('/addStore', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(store)
+            });
+
+            const data = await response.json();
+            console.log(data); 
+
+            if (data.message === 'New store was added') {
+                window.location.href = '/'; 
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
     });
 }
+
+document.addEventListener('DOMContentLoaded', addStore);
