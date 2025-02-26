@@ -9,16 +9,16 @@ function createStores(apiEndpoint) {
         .then(stores => {
             if (stores.length === 0) {
                 console.log('Stores fetched:', stores);
-                storesList.innerHTML = '<li>No stores available</li>';
+                storesList.innerHTML = '<p>No stores available</p>';
             } else {
                 stores.forEach(store => {
-                    const listItem = document.createElement('li');
+                    const listItem = document.createElement('div');
                     listItem.classList.add('store-item');
                     listItem.innerHTML = `
                         <h3>${store.name}</h3>
                         <p>District: ${store.district}</p>
                         <p>Industry: ${store.industry}</p>
-                        <p><a href="${store.url}" target="_blank">Visit Store</a></p>
+                        <p><a href="https://www.${store.url}/" target="_blank">Visit Store</a></p>
                         <button class="update-button" data-id="${store.id}">Update</button>
                         <button class="delete-button" data-id="${store.id}">Delete</button>
                     `;
@@ -62,8 +62,8 @@ function deleteStore(storeId) {
     })
         .then(response => response.json())
         .then(data => {
-            alert(data.message); 
-        
+            alert(data.message);
+
             createStores('/stores');
         })
         .catch(error => {

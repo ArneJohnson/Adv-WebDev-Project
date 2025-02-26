@@ -1,0 +1,45 @@
+html,
+body,
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3,
+p,
+div,
+button {
+  padding: 5px;
+  margin: 5px 10px 5px 10px;
+}
+
+h1 {
+  font-size: 32pt;
+}
+
+a {
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: lightgrey;
+  color: black;
+  text-decoration: none;
+  transition: 0.1s all;
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 7px 12px 7px 12px;
+}
+
+a:hover {
+  background-color: rgb(163, 163, 163);
+  color: white;
+  border-color: gray;
+}
+
+.navbar {
+  background-color: lightgrey;
+  padding: 30px;
+  margin: 0px;
+}
