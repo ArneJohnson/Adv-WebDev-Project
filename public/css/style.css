@@ -13,7 +13,7 @@ p,
 div,
 button {
   padding: 5px;
-  margin: 5px 10px 5px 10px;
+  margin: 10px 15px 10px 15px;
 }
 
 h1 {
@@ -42,4 +42,22 @@ a:hover {
   background-color: lightgrey;
   padding: 30px;
   margin: 0px;
+}
+
+.store-item {
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 20px;
+  width: 350px;
+}
+
+.store-item a {
+  float: right;
+}
+
+#storesList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
