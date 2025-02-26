@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:13
+    container_name: stores_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: stores
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - store-network
+
+  app:
+    build: .
+    container_name: stores_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: 12345
+      DB_NAME: stores
+    networks:
+      - store-network
+
+networks:
+  store-network:
+    driver: bridge
+
+volumes:
+  pg_data:
+    driver: local
