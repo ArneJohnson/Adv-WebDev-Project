@@ -3,9 +3,9 @@ services:
     image: postgres:13
     container_name: stores_db
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: "12345"
-      POSTGRES_DB: stores
+      POSTGRES_USER: ${POSTGRES_USER}  
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} 
+      POSTGRES_DB: ${POSTGRES_DB} 
     ports:
       - "5432:5432"
     volumes:
@@ -27,14 +27,24 @@ services:
     depends_on:
       - db
     environment:
-      DB_HOST: db   
-      DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: "12345"  # This must match the password set in the db container
-      DB_NAME: stores
+      DB_HOST: ${DB_HOST}  
+      DB_PORT: ${DB_PORT}  
+      DB_USER: ${DB_USER}  
+      DB_PASSWORD: ${DB_PASSWORD} 
+      DB_NAME: ${DB_NAME}  
     networks:
       - store-network
     command: ["node", "server.js"]
+
+  frontend:
+    build: ./public  # This assumes your frontend code is in the "public" directory
+    container_name: stores_frontend
+    ports:
+      - "3001:80"   # Expose port 80 inside the container to 3001 on your host
+    networks:
+      - store-network
+    depends_on:
+      - app
 
 networks:
   store-network:

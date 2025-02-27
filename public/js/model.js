@@ -4,12 +4,18 @@ const stores = require('../../stores.json');
     
 class ModelClass {
     constructor() {
+        console.log('DB_PASSWORD:', process.env.DB_PASSWORD); 
+        console.log("DB Host: ", process.env.DB_HOST);  // should print "db"
+        console.log("DB Port: ", process.env.DB_PORT);  // should print "5432"
+        console.log("DB User: ", process.env.DB_USER);  // should print "postgres"
+        console.log("DB Name: ", process.env.DB_NAME);  // should print "stores"
+
         this.pool = new Pool({
             user: 'postgres',
-            host: process.env.DB_HOST, //'127.0.0.1'
-            database: process.env.DB_NAME, //'stores'
-            password: process.env.DB_PASSWORD,//'12345'
-            port: process.env.DB_PORT, //5432
+            host: process.env.DB_HOST,
+            database: process.env.DB_NAME,
+            password: process.env.DB_PASSWORD,
+            port: process.env.DB_PORT,
         });         
     }
 
