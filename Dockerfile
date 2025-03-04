@@ -7,8 +7,8 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY  backend /app/backend 
 
-EXPOSE 3000
+EXPOSE 3001
 
-CMD ["node", "server.js"]
+CMD ["node", "backend/server.js"]

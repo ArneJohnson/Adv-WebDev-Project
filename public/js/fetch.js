@@ -4,11 +4,15 @@ function createStores(apiEndpoint) {
     const storesList = document.getElementById('storesList');
     storesList.innerHTML = '';
 
-    fetch(apiEndpoint)
-        .then(response => response.json())
+    fetch('http://localhost:3001' + apiEndpoint)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(stores => {
             if (stores.length === 0) {
-                console.log('Stores fetched:', stores);
                 storesList.innerHTML = '<p>No stores available</p>';
             } else {
                 stores.forEach(store => {
@@ -30,18 +34,15 @@ function createStores(apiEndpoint) {
         })
         .catch(error => {
             console.error('Error fetching stores:', error);
-            storesList.innerHTML = '<li>Failed to load stores</li>';
+            storesList.innerHTML = '<p>Failed to load stores. Please try again later.</p>';
         });
 }
 
-
 function attachButtonListeners() {
-
     const deleteButtons = document.querySelectorAll('.delete-button');
     deleteButtons.forEach(button => {
         button.addEventListener('click', (event) => {
             const storeId = event.target.dataset.id;
-
             deleteStore(storeId);
         });
     });
@@ -50,21 +51,19 @@ function attachButtonListeners() {
     updateButtons.forEach(button => {
         button.addEventListener('click', (event) => {
             const storeId = event.target.dataset.id;
-
             window.location.href = `/updateStore.html?id=${storeId}`;
         });
     });
 }
 
 function deleteStore(storeId) {
-    fetch(`/store?id=${storeId}`, {
+    fetch(`/api/store?id=${storeId}`, {
         method: 'DELETE',
     })
         .then(response => response.json())
         .then(data => {
             alert(data.message);
-
-            createStores('/stores');
+            createStores('/api/stores');
         })
         .catch(error => {
             console.error('Error deleting store:', error);
@@ -85,14 +84,14 @@ function createButton() {
         storesList.innerHTML = '';
 
         if (filterStatus) {
-            createStores('/storesFiltered');
+            createStores('/api/storesFiltered');
         } else {
-            createStores('/stores');
+            createStores('/api/stores');
         }
     });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     createButton();
-    createStores('/stores');
+    createStores('/api/stores');
 });

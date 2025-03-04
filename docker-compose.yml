@@ -34,13 +34,13 @@ services:
       DB_NAME: ${DB_NAME}  
     networks:
       - store-network
-    command: ["node", "server.js"]
+    command: ["node", "backend/server.js"]
 
   frontend:
-    build: ./public  # This assumes your frontend code is in the "public" directory
+    build: ./public
     container_name: stores_frontend
     ports:
-      - "3001:80"   # Expose port 80 inside the container to 3001 on your host
+      - "3001:80"
     networks:
       - store-network
     depends_on:
