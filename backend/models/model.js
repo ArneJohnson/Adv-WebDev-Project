@@ -1,5 +1,7 @@
 require('dotenv').config();
 const { Pool } = require('pg');
+const fs = require('fs');
+const path = require('path');
 
 class ModelClass {
     constructor() {
@@ -45,6 +47,23 @@ class ModelClass {
         }
     }
 
+    async loadInitialStores() {
+        const filePath = path.join(__dirname, '..', '..', 'stores.json');
+        
+        try {
+            const data = fs.readFileSync(filePath, 'utf8');
+            const stores = JSON.parse(data);
+            
+            for (const store of stores) {
+                await this.addStore(store);
+            }
+
+            console.log('Initial stores data has been loaded into the database.');
+        } catch (error) {
+            console.error('Error loading initial stores:', error);
+        }
+    }
+
     async getAllStores() {
         try {
             const res = await this.pool.query('SELECT * FROM public.stores ORDER BY name');
@@ -53,7 +72,7 @@ class ModelClass {
             console.error('Error fetching stores:', error);
             return [];
         }
-    }    
+    }
 
     async getStoreById(storeId) {
         try {

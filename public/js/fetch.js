@@ -4,7 +4,8 @@ function createStores(apiEndpoint) {
     const storesList = document.getElementById('storesList');
     storesList.innerHTML = '';
 
-    fetch('http://localhost:3001' + apiEndpoint)
+    // Change localhost to stores_app (the backend container name)
+    fetch('http://stores_app:3000' + apiEndpoint)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -57,7 +58,7 @@ function attachButtonListeners() {
 }
 
 function deleteStore(storeId) {
-    fetch(`/api/store?id=${storeId}`, {
+    fetch(`/store?id=${storeId}`, {
         method: 'DELETE',
     })
         .then(response => response.json())
@@ -70,28 +71,6 @@ function deleteStore(storeId) {
         });
 }
 
-function createButton() {
-    const filter = document.querySelector('.filter');
-    const button = document.createElement('button');
-
-    filter.appendChild(button);
-    button.innerText = 'District';
-
-    button.addEventListener('click', () => {
-        filterStatus = !filterStatus;
-
-        const storesList = document.querySelector('#storesList');
-        storesList.innerHTML = '';
-
-        if (filterStatus) {
-            createStores('/api/storesFiltered');
-        } else {
-            createStores('/api/stores');
-        }
-    });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-    createButton();
     createStores('/api/stores');
 });

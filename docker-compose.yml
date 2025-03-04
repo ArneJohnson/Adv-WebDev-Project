@@ -3,9 +3,9 @@ services:
     image: postgres:13
     container_name: stores_db
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}  
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} 
-      POSTGRES_DB: ${POSTGRES_DB} 
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
@@ -27,14 +27,14 @@ services:
     depends_on:
       - db
     environment:
-      DB_HOST: ${DB_HOST}  
-      DB_PORT: ${DB_PORT}  
-      DB_USER: ${DB_USER}  
-      DB_PASSWORD: ${DB_PASSWORD} 
-      DB_NAME: ${DB_NAME}  
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
     networks:
       - store-network
-    command: ["node", "backend/server.js"]
+    command: ["wait-for-it", "stores_db:5432", "--timeout=60", "--", "node", "backend/server.js"]
 
   frontend:
     build: ./public

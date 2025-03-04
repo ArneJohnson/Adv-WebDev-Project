@@ -2,10 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const ModelClass = require('./models/model'); 
+const cors = require('cors');
 const app = express();
 const model = new ModelClass();
 const port = 3000;  
 
+app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
