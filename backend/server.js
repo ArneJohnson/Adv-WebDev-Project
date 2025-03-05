@@ -1,25 +1,25 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const ModelClass = require('./models/model'); 
+const ModelClass = require('./models/model');
 const cors = require('cors');
 const app = express();
 const model = new ModelClass();
-const port = 3000;  
+const port = 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 model.initDb().then(() => model.setupDb());
 
 app.get(['/', '/stores'], (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
 app.get('/api/stores', async (req, res) => {
     try {
-        const stores = await model.getAllStores(); 
+        const stores = await model.getAllStores();
         res.json(stores);
     } catch (error) {
         console.error('Error fetching stores:', error);
@@ -29,7 +29,7 @@ app.get('/api/stores', async (req, res) => {
 
 app.get('/store', async (req, res) => {
     const { id: storeid } = req.query;
-    
+
     if (isNaN(storeid)) {
         return res.status(400).json({ error: 'Invalid store id' });
     }
@@ -47,7 +47,7 @@ app.get('/store', async (req, res) => {
 
 app.delete('/store', async (req, res) => {
     const { id: storeid } = req.query;
-    
+
     try {
         await model.deleteStore(storeid);
         res.json({ message: `${storeid} was deleted` });

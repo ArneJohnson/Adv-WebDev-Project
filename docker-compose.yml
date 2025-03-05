@@ -13,7 +13,17 @@ services:
     networks:
       - store-network
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "stores", "-h", "stores_db"]
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "-U",
+          "postgres",
+          "-d",
+          "stores",
+          "-h",
+          "stores_db",
+        ]
       interval: 10s
       retries: 5
       start_period: 30s
@@ -34,7 +44,7 @@ services:
       DB_NAME: ${DB_NAME}
     networks:
       - store-network
-    command: ["wait-for-it", "stores_db:5432", "--timeout=60", "--", "node", "backend/server.js"]
+    command: ["node", "backend/server.js"]
 
   frontend:
     build: ./public
