@@ -36,6 +36,8 @@ services:
       - "3000:3000"
     depends_on:
       - db
+    env_file:
+      - .env
     environment:
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
